@@ -181,6 +181,35 @@ define([
                 }
             }
         });
+        // FIXME: find a better way to follow input changes. Used to update the isCurrentPostUnsaved status.
+        $interval(function() {
+            if (!$rootScope.$$phase) {
+                $rootScope.$apply();
+            }
+        }, 500);
+        // NOTE: this can be a start to listen input, instead of the above interval
+        // SirTrevor.EventBus.on('block:create:existing', listenInput);
+        // SirTrevor.EventBus.on('block:create:new', listenInput);
+        // function listenInput(block) {
+        //     // create and trigger a 'change' event for all contenteditable elements
+        //     block.$inner.find('[contenteditable]').on('focus', function(ev) {
+        //         var $this = $(this);
+        //         $this.data('before', $this.html());
+        //     });
+        //     block.$inner.find('[contenteditable]').on('blur keyup paste input', function(ev) {
+        //         var $this = $(this);
+        //         if ($this.data('before') !== $this.html()) {
+        //             $this.data('before', $this.html());
+        //             $this.trigger('change');
+        //         }
+        //     });
+        //     // when the field changes
+        //     block.$inner.find('[contenteditable]').on('change', function () {
+        //         if (!$rootScope.$$phase) {
+        //             $rootScope.$apply();
+        //         }
+        //     });
+        // }
     }
 
     BlogSettingsController.$inject = ['blog', 'api'];
